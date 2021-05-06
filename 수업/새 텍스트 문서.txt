@@ -1,0 +1,13 @@
+DML : insert into table (~,~~,~~~) values(~~,~~~,~~)
+	update table set column=~~ where ~~
+	delete from table where ~
+
+DDL : 개체(테이블)
+create table tableName(
+	columnName1 type
+	~~~~
+	)
+drop table tableName
+
+alter table tableName
+-add, modify, remove, rename, drop
