@@ -1,33 +1,33 @@
---1. 20¹ø ºÎ¼­¿¡ ¼Ò¼ÓµÈ »ç¿øÀÇ »ç¿ø¹øÈ£¿Í ÀÌ¸§, ºÎ¼­ ¹øÈ£¸¦ Ãâ·ÂÇÏ´Â SELECT¹®À» ÇÏ³ªÀÇ ºä(v_em_dno) ·Î Á¤ÀÇÇÏ¼¼¿ä.
+--1. 20ë²ˆ ë¶€ì„œì— ì†Œì†ëœ ì‚¬ì›ì˜ ì‚¬ì›ë²ˆí˜¸ì™€ ì´ë¦„, ë¶€ì„œ ë²ˆí˜¸ë¥¼ ì¶œë ¥í•˜ëŠ” SELECTë¬¸ì„ í•˜ë‚˜ì˜ ë·°(v_em_dno) ë¡œ ì •ì˜í•˜ì„¸ìš”.
 CREATE VIEW v_em_dno
 AS SELECT eno, ename, dno
 FROM employee
 WHERE dno=20;
 
 SELECT * FROM v_em_dno;
---2. ÀÌ¹Ì »ý¼ºµÈ ºä(v_em_dno)¿¡ ´ëÇØ¼­ ±Þ¿©¿Í ´ã´ç¾÷¹« ¿ª½Ã Ãâ·ÂÇÒ ¼ö ÀÖµµ·Ï ¼öÁ¤ÇÏ¼¼¿ä.
+--2. ì´ë¯¸ ìƒì„±ëœ ë·°(v_em_dno)ì— ëŒ€í•´ì„œ ê¸‰ì—¬ì™€ ë‹´ë‹¹ì—…ë¬´ ì—­ì‹œ ì¶œë ¥í•  ìˆ˜ ìžˆë„ë¡ ìˆ˜ì •í•˜ì„¸ìš”.
 CREATE OR REPLACE VIEW v_em_dno
 AS SELECT eno, ename, dno, salary, job
 FROM employee
 WHERE dno=20; 
 
---3. ´ã´ç¾÷¹« º°·Î ÃÖ´ë±Þ¿©, ÃÖ¼Ò±Þ¿©, ±Þ¿© ÃÑ¾×À» º¸¿©ÁÖ´Â ºä(EMP_group_job)¸¦ »ý¼ºÇÑ ´ÙÀ½ Á¶È¸ ÇØº»´Ù.
+--3. ë‹´ë‹¹ì—…ë¬´ ë³„ë¡œ ìµœëŒ€ê¸‰ì—¬, ìµœì†Œê¸‰ì—¬, ê¸‰ì—¬ ì´ì•¡ì„ ë³´ì—¬ì£¼ëŠ” ë·°(EMP_group_job)ë¥¼ ìƒì„±í•œ ë‹¤ìŒ ì¡°íšŒ í•´ë³¸ë‹¤.
 CREATE OR REPLACE VIEW emp_group_job
-AS SELECT job, MAX(salary) "ÃÖ´ë ±Þ¿©", MIN(salary) "ÃÖ¼Ò ±Þ¿©", SUM(salary) "±Þ¿© ÃÑ¾×"
+AS SELECT job, MAX(salary) "ìµœëŒ€ ê¸‰ì—¬", MIN(salary) "ìµœì†Œ ê¸‰ì—¬", SUM(salary) "ê¸‰ì—¬ ì´ì•¡"
 FROM employee
 GROUP BY job;
 
 SELECT * FROM emp_group_job;
 
---4. ÀÌ¹Ì »ý¼ºµÈ ºä(v_em_dno)¸¦ ÅëÇØ¼­ Á¢±Ù°¡´ÉÇÑ µ¥ÀÌÅÍ¸¸ ÀÔ·Â°¡´ÉÇÏµµ·Ï Á¦¾àÀ» °É¾î º»´Ù.
+--4. ì´ë¯¸ ìƒì„±ëœ ë·°(v_em_dno)ë¥¼ í†µí•´ì„œ ì ‘ê·¼ê°€ëŠ¥í•œ ë°ì´í„°ë§Œ ìž…ë ¥ê°€ëŠ¥í•˜ë„ë¡ ì œì•½ì„ ê±¸ì–´ ë³¸ë‹¤.
 CREATE OR REPLACE VIEW emp_group_job
-AS SELECT job, MAX(salary) "ÃÖ´ë ±Þ¿©", MIN(salary) "ÃÖ¼Ò ±Þ¿©", SUM(salary) "±Þ¿© ÃÑ¾×"
+AS SELECT job, MAX(salary) "ìµœëŒ€ ê¸‰ì—¬", MIN(salary) "ìµœì†Œ ê¸‰ì—¬", SUM(salary) "ê¸‰ì—¬ ì´ì•¡"
 FROM employee
 GROUP BY job
 WITH CHECK OPTION;
 
 
---5. ´ÙÀ½ µ¥ÀÌÅÍ¸¦ ºä (v_em_dno) ¸¦ ÅëÇØ¼­ ÀÔ·ÂÀ» ÇÑ µÚ ºä(EMP_group_job)¸¦ ÅëÇØ¼­ Á¶È¸ ÇØº»´Ù.
+--5. ë‹¤ìŒ ë°ì´í„°ë¥¼ ë·° (v_em_dno) ë¥¼ í†µí•´ì„œ ìž…ë ¥ì„ í•œ ë’¤ ë·°(EMP_group_job)ë¥¼ í†µí•´ì„œ ì¡°íšŒ í•´ë³¸ë‹¤.
 
 INSERT INTO v_em_dno
 VALUES(5100, 'Belita', 10 ,1500 ,'CLERK');
@@ -42,30 +42,25 @@ VALUES(5500, 'Zinna', 10, 1050, 'CLERK');
 
 SELECT * FROM emp_group_job;
 
---6. ÀÌ¹Ì »ý¼ºµÈ ºä(v_em_dno)¿¡ ´ëÇØ¼­ ÀÐ±â Àü¿ë ¼Ó¼ºÀ» ºÎ¿©ÇØº¸ÀÚ
+--6. ì´ë¯¸ ìƒì„±ëœ ë·°(v_em_dno)ì— ëŒ€í•´ì„œ ì½ê¸° ì „ìš© ì†ì„±ì„ ë¶€ì—¬í•´ë³´ìž
 CREATE OR REPLACE VIEW v_em_dno
 AS SELECT eno, ename, dno, salary, job
 FROM employee
 WHERE dno=20 WITH READ ONLY;
 
---7. »ç¹ø, »ç¿øÀÌ¸§, ºÎ¼­¹øÈ£¿Í ºÎ¼­ ÀÌ¸§À» º¸¿©ÁÖ´Â ºä¸¦ (emp_dept) »ý¼ºÇÏ¼¼¿ä.
+--7. ì‚¬ë²ˆ, ì‚¬ì›ì´ë¦„, ë¶€ì„œë²ˆí˜¸ì™€ ë¶€ì„œ ì´ë¦„ì„ ë³´ì—¬ì£¼ëŠ” ë·°ë¥¼ (emp_dept) ìƒì„±í•˜ì„¸ìš”.
 CREATE OR REPLACE VIEW emp_dept
-AS SELECT eno, ename, dno, job
-FROM employee;
-
---8. »ý¼ºµÈ ¸ðµç ºä¸¦ Á¶È¸ÇÏ¼¼¿ä.
+AS SELECT eno, ename, dno, dname
+FROM employee e NATURAL JOIN department d;
+SELECT * FROM emp_dept;
+--8. ìƒì„±ëœ ëª¨ë“  ë·°ë¥¼ ì¡°íšŒí•˜ì„¸ìš”.
 SELECT view_name, text 
 FROM user_views;
 
 
---9. »ý¼ºµÈ ºä(v_em_dno,emp_group_job,emp_dept)¸¦ Á¦°ÅÇÏ¼¼¿ä
+--9. ìƒì„±ëœ ë·°(v_em_dno,emp_group_job,emp_dept)ë¥¼ ì œê±°í•˜ì„¸ìš”
 DROP VIEW v_em_dno;
 DROP VIEW emp_group_job;
 DROP VIEW emp_dept;
 
 SELECT * FROM employee;
-
-
-
-
-
